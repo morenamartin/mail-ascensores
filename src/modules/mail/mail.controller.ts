@@ -1,0 +1,163 @@
+import { Body, Controller, Post } from "@nestjs/common";
+import { MailService } from "./mail.service";
+import { SendEmailDto } from "src/common/dto";
+import type { Mail } from "./mail.interface";
+
+@Controller("email")
+export class MailController {
+    constructor(private readonly mailService: MailService) {}
+
+    @Post("send")
+    sendMail(@Body() form: Mail) {
+    const empresaTexto = form.empresa 
+    ? `${form.empresa}` 
+    : "El usuario no indicó empresa";
+
+        const email: SendEmailDto = {
+            "mailOptions": {
+                "from": `${form.email}`,
+                "to": "ascensoresmg@gmail.com",
+                "subject": "Nueva consulta!",
+                "html": `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+                    <html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+                    <head>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                    <meta name="format-detection" content="telephone=no">
+                    <style type="text/css">
+                        /* CLIENT-SPECIFIC STYLES */
+                        #outlook a { padding:0; }
+                        .ReadMsgBody { width:100%; }
+                        .ExternalClass { width:100%; }
+                        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div { line-height:100%; }
+                        body, table, td, a { -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; }
+                        table, td { mso-table-lspace:0pt; mso-table-rspace:0pt; }
+                        img { -ms-interpolation-mode:bicubic; border:0; height:auto; line-height:100%; outline:none; text-decoration:none; }
+
+                        /* RESET STYLES */
+                        body { margin:0 !important; padding:0 !important; width:100% !important; }
+                        img { border:0; height:auto; line-height:100%; outline:none; text-decoration:none; }
+                        table { border-collapse:collapse !important; }
+
+                        /* RESPONSIVE STYLES */
+                        @media screen and (max-width: 600px) {
+                        .email-container {
+                            width: 100% !important;
+                            margin: 0 auto !important;
+                        }
+                        .fluid-table {
+                            width: 100% !important;
+                        }
+                        .stack-column, .stack-column-center {
+                            display: block !important;
+                            width: 100% !important;
+                            max-width: 100% !important;
+                            direction: ltr !important;
+                        }
+                        .center-on-mobile {
+                            text-align: center !important;
+                        }
+                        .img-fluid {
+                            height: auto !important;
+                            max-width: 100% !important;
+                            width: 100% !important;
+                        }
+                        .padding-mobile {
+                            padding: 20px !important;
+                        }
+                        .padding-mobile-h {
+                            padding-left: 20px !important;
+                            padding-right: 20px !important;
+                        }
+                        .padding-mobile-v {
+                            padding-top: 20px !important;
+                            padding-bottom: 20px !important;
+                        }
+                        .font-size-mobile {
+                            font-size: 16px !important;
+                            line-height: 24px !important;
+                        }
+                        .hide-on-mobile {
+                            display: none !important;
+                            width: 0 !important;
+                            height: 0 !important;
+                            overflow: hidden !important;
+                        }
+                        }
+                    </style>
+                    </head>
+                    <body style="margin: 0; padding: 0; background-color: #F5F6F6; font-family: Arial, sans-serif; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
+                    <!-- CONTAINER -->
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #F5F6F6; min-height: 100vh;">
+                        <tr>
+                        <td align="center" valign="top" style="padding: 20px 0;">
+                            <!-- EMAIL WRAPPER (MAX 600PX) -->
+                            <table border="0" cellpadding="0" cellspacing="0" class="email-container" width="100%" style="margin: 0 auto; background-color: #FFFFFF; border-collapse: collapse;">
+                            <!-- HEADER -->
+                            <tr>
+                                <td bgcolor="#2a5477" align="center" style="padding: 20px;">
+                                <img src="https://fjpsump.stripocdn.email/content/guids/CABINET_06167eb4969bc67db2663f4421ae42b3248eb6da63a525d1f0344fcc4721918b/images/logo.png" alt="Logo" width="60" style="display: block; margin: 0 auto;">
+                                </td>
+                            </tr>
+                            <!-- TITLE -->
+                            <tr>
+                                <td bgcolor="#2a5477" align="center" style="padding: 20px; color: #ffffff; font-size: 32px; font-weight: bold; line-height: 1.2; font-family: Arial, sans-serif;">
+                                ¡Tienes una nueva consulta!
+                                </td>
+                            </tr>
+                            <!-- CONTENT -->
+                            <tr>
+                                <td align="left" style="padding: 30px; color: #333333; font-size: 14px; line-height: 1.5; font-family: Arial, sans-serif;">
+                                <p style="margin: 0 0 20px 0;"><strong>📛 Nombre:</strong> ${form.name}</p>
+                                <hr style="border: 0; border-top: 1px solid #cccccc; margin: 20px 0;">
+                                <p style="margin: 0 0 20px 0;"><strong>📧 Email:</strong> ${form.email}</p>
+                                <hr style="border: 0; border-top: 1px solid #cccccc; margin: 20px 0;">
+                                <p style="margin: 0 0 20px 0;"><strong>📞 Teléfono:</strong> ${form.phone}</p>
+                                <hr style="border: 0; border-top: 1px solid #cccccc; margin: 20px 0;">
+                                <p style="margin: 0 0 20px 0;"><strong>🏢 Empresa:</strong> ${empresaTexto}</p>
+                                <hr style="border: 0; border-top: 1px solid #cccccc; margin: 20px 0;">
+                                <p style="margin: 0 0 20px 0;"><strong>📝 Consulta:</strong></p>
+                                <p style="margin: 0;">${form.consulta}</p>
+                                </td>
+                            </tr>
+                            <!-- CTA -->
+                            <tr>
+                                <td bgcolor="#f5f4f4" align="center" style="padding: 30px; font-family: Arial, sans-serif;">
+                                <p style="margin: 0 0 20px 0; color: #333333; font-size: 14px;">Por favor, contacta al remitente lo antes posible.</p>
+                                <table border="0" cellspacing="0" cellpadding="0" role="presentation" style="margin: 0 auto;">
+                                    <tr>
+                                    <td align="center" bgcolor="#d07b2c" style="border-radius: 20px; padding: 12px 30px;">
+                                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=${form.email}&su=Respuesta&body=Hola,%20gracias%20${form.name}%20por%20contactarnos" target="_blank" style="color: #ffffff; text-decoration: none; font-weight: bold; font-size: 14px; font-family: Arial, sans-serif; display: inline-block;">Responder al contacto </a>
+                                    </td>
+                                    </tr>
+                                </table>
+                                </td>
+                            </tr>
+                            <!-- FOOTER -->
+                            <tr>
+                                <td bgcolor="#2a5477" align="center" style="padding: 20px; color: #ffffff; font-size: 12px; line-height: 1.5; font-family: Arial, sans-serif;">
+                                Este correo fue generado automáticamente desde tu <a style="padding-left: 2px; text-decoration: none; color: #4c83ee;"  href="http://localhost:3001/">sitio web.</a>
+                                </td>
+                            </tr>
+                            </table>
+                        </td>
+                        </tr>
+                    </table>
+                    </body>
+                    </html>
+                `
+            },
+            "smtpConfig" : {
+                "host": "sandbox.smtp.mailtrap.io",
+                "port": 2525,
+                "secure": false,
+                "auth": {
+                    "user": "02755f0b5ed80b",
+                    "pass": "ec97175bb86757"
+                }
+            }
+        }
+        return this.mailService.sendMail(email);
+    }
+}
