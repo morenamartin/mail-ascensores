@@ -21,8 +21,8 @@ export class AppService {
     try {
       await emailjs.send(
         
-        process.env.EMAILJS_SERVICE_ID,   // Ej: "service_xyz123"
-        process.env.EMAILJS_TEMPLATE_ID,  // Ej: "template_abc456"
+        process.env.EMAILJS_SERVICE_ID,
+        process.env.EMAILJS_TEMPLATE_ID,
         {  
           from_name: name,
           from_email: email,
