@@ -1,14 +1,23 @@
 import { Body, Controller, Post } from "@nestjs/common";
 import { AppService } from "./app.service";
+import { IsString, IsEmail, IsOptional } from 'class-validator';
 
+export class SendEmailDto {
+  @IsString()
+  name: string;
 
-class SendEmailDto {
-    to: string;
-    name: string;
-    email: string; 
-    phone: string;
-    empresa?: string;
-    consulta: string;
+  @IsEmail()
+  email: string;
+
+  @IsString()
+  phone: string;
+
+  @IsOptional()
+  @IsString()
+  empresa?: string;
+
+  @IsString()
+  consulta: string;
 }
 
 @Controller()
@@ -19,8 +28,15 @@ export class AppController {
     async sendEmail(
         @Body() sendEmailDto: SendEmailDto
     ): Promise<{ message: string }> {
-        await this.appService.sendFormMail(sendEmailDto.to, sendEmailDto.name, sendEmailDto.email, sendEmailDto.phone, sendEmailDto.empresa || "Este usuario no tiene empresa", sendEmailDto.consulta,)
+        console.log('📥 DTO recibido:', sendEmailDto);
+        await this.appService.sendFormMail(sendEmailDto.name, sendEmailDto.email, sendEmailDto.phone, sendEmailDto.empresa || "Este usuario no tiene empresa", sendEmailDto.consulta,)
         return { message: "Su consulta se envió correctamente" }
+    }
+
+    @Post('test')
+        testBody(@Body() body: SendEmailDto) {
+        console.log('🔍 Cuerpo crudo:', body);
+        return { received: body };
     }
     
 }
