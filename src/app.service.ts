@@ -9,15 +9,17 @@ export class AppService {
     email: string,
     phone: string,
     empresa: string,
+    domicilio: string,
     consulta: string,
   ): Promise<void> {
-    console.log('📨 Datos que se envían a EmailJS:', {
-      from_name: name,
-      from_email: email,
-      phone,
-      empresa,
-      consulta,
-    });
+    // console.log('📨 Datos que se envían a EmailJS:', {
+    //   from_name: name,
+    //   from_email: email,
+    //   phone,
+    //   empresa,
+    //   domicilio,
+    //   consulta,
+    // });
     try {
       await emailjs.send(
         
@@ -28,6 +30,7 @@ export class AppService {
           from_email: email,
           phone,
           empresa,
+          domicilio,
           consulta,
         },
         {

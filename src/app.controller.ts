@@ -15,6 +15,10 @@ export class SendEmailDto {
   @IsOptional()
   @IsString()
   empresa?: string;
+  
+  @IsOptional()
+  @IsString()
+  domicilio: string;
 
   @IsString()
   consulta: string;
@@ -29,7 +33,7 @@ export class AppController {
         @Body() sendEmailDto: SendEmailDto
     ): Promise<{ message: string }> {
         // console.log('📥 DTO recibido:', sendEmailDto);
-        await this.appService.sendFormMail(sendEmailDto.name, sendEmailDto.email, sendEmailDto.phone, sendEmailDto.empresa || "Este usuario no tiene empresa", sendEmailDto.consulta,)
+        await this.appService.sendFormMail(sendEmailDto.name, sendEmailDto.email, sendEmailDto.phone, sendEmailDto.empresa || "Este usuario no tiene empresa", sendEmailDto.domicilio, sendEmailDto.consulta,)
         return { message: "Su consulta se envió correctamente" }
     }
 

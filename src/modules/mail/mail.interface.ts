@@ -4,5 +4,6 @@ export interface Mail {
   email: string;
   phone: string;
   empresa?: string;
+  domicilio: string;
   consulta: string;
 }
